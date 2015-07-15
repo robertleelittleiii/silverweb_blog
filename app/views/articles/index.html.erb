@@ -1,0 +1,31 @@
+<div class="hidden-item">
+    <div id="as_window"><%=params[:request_type]=="window"%></div>
+    <div id="dialog-height">650</div>
+    <div id="dialog-width">1050</div>
+    <div id="dialog-name">Article Manager</div>
+</div>
+
+<%=article_attr_display(nil) %>
+
+<div class="cms-block">
+  <div align="center">
+    <!-- START:flash -->
+    <% if flash[:notice] -%>
+      <div id="notice"><%= flash[:notice] %></div>
+    <% end -%>
+    <!-- END:flash -->
+  </div>
+
+  <div id="site-pref-list">
+   <!-- <h1  class="cms-header">Site Articles</h1> -->
+
+     <%=link_to 'New Article',{ :action=>:create_empty_record,:typeofrecord=>"Article"}, :class=>"button-link" ,:id=>"new-article", :remote=>true%>
+   
+    <p>
+      </br>
+      </br>
+    </p>
+      <%=render(:partial=>"article_data_table") %>
+  </div>
+</div>
+

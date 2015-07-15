@@ -1,0 +1,85 @@
+<div id="attr-pages" class="hidden-item">
+    <div id="full-screen">false</div>
+    <div id="admin-active"><%=  @admin_active=admin_active() || "" %></div>
+    <div id="page_number"><%=@the_page%></div>
+</div>
+
+<% if @articles.count > 0 then %>
+  <div id="article-list">
+      <div id="article-block">
+          <%  @articles.each_with_index do |article, counter|  %>
+
+            <% if @admin_active=="false" then %>
+              <%  if(counter % 3) == 0 %>
+                <%  if counter  > 1 %>
+              </div>
+            <% end %>  
+
+            <div class="article-row">
+              <% else %>
+              <% end %>
+
+            <% else %>   
+
+            <% end %>  
+
+            <div class="article-item <%=@admin_active=="true" ? " admin" : "" %> " id="article_<%=article.id%>">
+                <%=  article_edit_div(article)%>
+
+                <div id="item-id" class="hidden-item">
+                    <%=article.id%>
+                    <%=link_to(article.name.to_s.html_safe, {:action=>:article_detail, :id=>article.id}, :class=>"article-detail-link") %>
+
+                </div>
+
+                <div class="article-picture">
+                    <div class="article-float">
+                        <div class="article-click" style="background-image: url('<%=asset_path(article.pictures.where(:title=>"List")[0].blank? ? "empty_s.jpg" : article.pictures.where(:title=>"List")[0].image_url(:large).to_s,:class=>"article-image")%>');"></div>
+                    </div>
+                </div>
+                
+                <div class="article-info">
+                    <div class="article-publish-date">
+                        <%= article.updated_at.strftime(" %B %d, %Y at %l:%M %p") %>
+                    </div>
+                    <div class="article-name">
+                    <%=link_to(article.name.to_s.html_safe, {:action=>:article_detail, :id=>article.id}, :class=>"article-detail-link") %>
+                    </div>
+                    <div class="article-avatar">
+                        <%=image_tag(article.user.gravatar_url,:class=>"avitar") %>
+                    </div>
+                    <div class="article-author">
+                        <div class="article-author-lable">by</div> <div class="article-author-name"><%= author_full_info(article) rescue "unknown"%></div>
+                    </div>
+                </div>
+
+                <% if @admin_active=="true" then %>
+                  <%= image_tag("interface/handle.png",:class=>"handle") %>
+                <% end %>
+            </div>
+          <% end %>
+
+      </div>
+  </div>
+  <% if @admin_active=="false" then %>
+    </div>
+  <% end %>
+  <div class="pagination-div">  
+      <div class="article-counts">
+          Showing <%=@article_first%> to <%=@article_last%> of <%=@article_count%>
+      </div>
+      <%=paginate @articles%>
+  </div>
+
+<%else%>
+  </br>
+  </br>
+  </br>
+  <center>
+      NO PORTFOLIOS FOUND IN CATEGORY !
+  </center>
+<%end%>
+
+
+
+

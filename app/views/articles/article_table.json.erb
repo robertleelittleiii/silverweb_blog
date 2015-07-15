@@ -1,0 +1,14 @@
+{"sEcho": <%= params[:sEcho] || -1 %>,
+ "iTotalRecords": <%= @total_objects %>,
+ "iTotalDisplayRecords": <%= @total_objects %>,
+ "aaData":[
+<% @objects.each do |article| %>
+  [
+   "<%= article.id%><div id='article-id' class='hidden-item'><%= article.id%></div> ",
+   "<%= article.title %>",
+   "<%= raw(truncate(article.body.to_s.gsub(/<\/?[^>]+>|(\r\n|\n|\r)|&nbsp;/, '').html_safe, :length => 17)) %>",
+   "<%= article.author rescue "n/a" %>",  
+   "<center><div class='delete-article-item'><%=image_tag('interface/delete.png', :border=>'0').gsub("\"", "'").html_safe() %></div> </center>"
+  ] <% if @objects.last != article then %> , <% end %>
+<% end %>
+]}

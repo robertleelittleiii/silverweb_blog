@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>app/models/article.rb</url>
+            <bookmark id="1">
+                <name/>
+                <line>29</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/silverweb_blog.gemspec</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/lib/silverweb_blog/engine.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/lib/silverweb_blog/version.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/lib/silverweb_blog/base.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/lib/silverweb_blog/controller_extensions.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/lib/silverweb_blog/raility.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/lib/silverweb_blog.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/Gemfile</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/db/migrate/20150708022318_create_articles.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/db/migrate/20150708022836_create_comments.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/models/article.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/controllers/articles_controller.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/_form.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/show.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/edit.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/helpers/articles_helper.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/edit.html_1.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/stylesheets/articles.scss</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/_article_data_table.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/index.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/javascripts/articles/index_.js</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/javascripts/articles/shared.js</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/config/routes.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/article_table.json.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/site/article_detail.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/javascripts/silverweb_blog.js</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/stylesheets/silverweb_blog.scss</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/site/article_list.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/stylesheets/site/article_detail.css</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/stylesheets/site/article_list.css</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/_image.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/_picture_form.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/_picture_list.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/_picture_view.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/edit_picture.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/articles/_image_section.html.erb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/javascripts/articles/edit.js</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/assets/javascripts/site/article_list.js</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/helpers/blog_menu_helper.rb</file>
+            <file>file:/Users/rlittle/Development/Rails/bitbucket/gems/silverweb_blog/app/views/menus/_blog_type.html.erb</file>
+        </group>
+    </open-files>
+</project-private>

@@ -1,0 +1,113 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 14, 2015, 12:50:49 PM
+    Author     : rlittle
+*/
+
+div.article-float div {
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background: none center center no-repeat #eee;
+  -webkit-background-size: cover;
+}
+
+img.handle {
+  position: absolute;
+  top: 210px;
+  left: 5px;
+}   
+
+div.article-item {
+  background-color: black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+  position: relative;
+}
+
+div.article-picture {
+  width: 680px;
+  display: inline-block;
+  float: left;
+  cursor: pointer;
+}
+
+div.article-info {
+  display: inline-block;
+  background-color: black;
+  color: white;
+  width: 320px;
+  height: 100%;
+  float: left;
+  height: 251px;
+  font-size: 16px;
+}
+
+div.article-info div {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+}   
+
+div.article-publish-date {
+  font-size: 20px;
+  padding-top: 15px;
+}
+
+div.article-name {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.article-info div {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 3px;
+}
+
+div#article-block {
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+div.article-author div {
+  display: inline-block;
+  padding: 0px;
+}
+
+
+.article-name a {
+  color: white;
+  text-decoration: none;
+}
+.article-name a:hover {
+  text-decoration: underline;
+  color: lightgray;
+}
+
+.article-avatar {
+  width: 10px;
+  height: 37px;
+  border-radius: 400px;
+  border-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  position: absolute;
+  margin: 10px;
+}
+
+img.avitar {
+  width: 50px;
+  height: auto;
+  margin-top: -14px;
+  margin-left: -20px;
+}

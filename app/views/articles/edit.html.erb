@@ -1,0 +1,111 @@
+<div class="hidden-item">
+    <div id="as_window"><%=params[:request_type]=="window"%></div>
+    <div id="dialog-height">650</div>
+    <div id="dialog-width">1050</div>
+    <div id="dialog-name">Edit Article</div>
+</div>
+
+<%=  article_info(@article) %>
+<%= tinymce_assets %>
+
+<p> 
+    <b>Version: (looking at version: <span class="inline-item" id="version-number"><%=params[:version].blank? ? "current" : params[:version] %></span>)</b><br>
+         <%=link_to((params[:version]==@article.versions.last.number.to_s) ? "(#{@article.versions.last.number})":@article.versions.last.number , {:version=>@article.versions.last.number, :format => :json},:remote=>true, :class=>'version-info') rescue "No Versions Found!"%>
+    <% @article.versions.reverse.each do |article| %>
+      | <%=link_to((params[:version]==(article.number-1).to_s) ? "(#{article.number-1})":article.number-1 , {:version=>article.number-1, :format => :json},:remote=>true, :class=>'version-info') %> 
+    <% end %>
+    </br>
+</p>
+
+<div id="article-tabs">
+    <ul>
+        <li><a href="#information-tab">Information</a></li>
+        <li><a href="#images-tab">Images</a></li>
+        <li><a href="#body-tab">Body</a></li>
+        <li><a href="#preview-tab">Live Preview</a></li>
+    </ul>
+    <div id="information-tab">
+        <div class="cms-content">
+            <p>
+                <b>Title:</b><br>
+                <%=editablefieldcreate("title", @article)%>
+            </p>
+
+            <p> 
+                <b> Author:</b><br>
+<%= @article.author rescue "none found."%> </br></br>
+            </p>
+            <p>
+                <b>Use Image:</b><br>
+                <%=editablecheckboxedit("show_image", @article, "Uses Image")%>
+
+            </p>
+                        
+            <p>
+                <b>Status:</b><br>
+                <%=ajax_select("status","article",@article, @status_types, "Choose Status...")%><br><br>
+            </p>
+        </div>
+    </div>
+    <div id="images-tab">
+        <div class="cms-content">
+            <div id="article-images">
+      <%= render :partial=>"image_section" %>
+      </div>
+        </div>
+    </div>
+    <div id="body-tab">
+        <div class="cms-content">
+
+<%#= text_area_tag :body, @article.body, :id => "article[body]", :class => "tinymce", :rows => 40, :cols => 120 %>
+
+            <%=form_for(@article, :remote=>true, :id=>"article-body", :format=>:json) do |f| %>
+              <%= f.submit "Update", :class=>"hidden-item"%><br>
+
+              <center>
+                  <%= f.text_area :body, :class => "tinymce-article" , :rows => "80", :cols => "120" %>
+                  <%= tinymce_settings(:default,"tinymce_config",{mode: "exact", selector: "textarea.tinymce-article", save_onsavecallback: "mysave", height: "375", width: "950", init_instance_callback: "tinyMcePostInit"})%>   
+  <%#= tinymce :default, mode: "exact", selector: "textarea.tinymce-article" ,save_onsavecallback: "mysave", height: "375", width: "950", init_instance_callback: "tinyMcePostInit"%>
+              </center>
+              <br>
+            <% end %>
+            <div class="hidden-item">
+                <%= form_for Picture.new, :html => {:multipart => true, id: "picture-paste-article"} do |f| %>
+                  <span class="btn btn-success fileinput-button">
+                      <i class="glyphicon glyphicon-plus"></i>
+                      <span><%=image_tag("interface/browse.png", :id=>"file-button") %> </span>
+                      <!-- The file input field used as target for the file upload widget -->
+                      <%= f.file_field :image, :multiple=>true , :name=>"picture[image]" %>
+                  </span>
+                <% end %>
+            </div>
+            <script id="template-upload" type="text/x-tmpl">
+                <div class="upload">
+                {%=o.name%}
+                <div class="progress"><div class="bar" style="width: 0%"></div></div>
+                </div>
+            </script>
+        </div>
+
+    </div>
+    <div id="preview-tab">
+        <div class="cms-content">
+            <div class="display-area">
+                <div style="display:inline-block; width:600px">
+                    <b>Full Screen:</b><br>
+                    <iframe class="preview" src="<%=url_for(:controller=> :site, :action=>:article_detail, :id=>@article, :only_path=>true)%>" align="left" width="1024" height="800"></iframe>
+                </div>
+                <div style="display:inline-block; width:200px">
+                    <b>Mobile:</b><br>
+                    <iframe class="preview" src="<%=url_for(:controller=> :site, :action=>:article_detail, :id=>@article, :only_path=>true)%>" align="left" width="400" height="800"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<%#*<p> <%= link_to '<< Back', request.env['HTTP_REFERER'], :class=>"button-link" %>
+<%#= link_to 'Preview', ((not @article.article_url.blank?) ? @article.article_url :  url_for(:controller=> :site, :action=>:show_article, :id=>@article, :only_path=>true)) ,:class=>"button-link" %>

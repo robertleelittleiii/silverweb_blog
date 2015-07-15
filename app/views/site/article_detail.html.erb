@@ -1,0 +1,40 @@
+<div id="article-display-article">
+    <% if notice -%>
+      <div id="notice"><%= notice  %></div>
+    <% end -%>
+
+    <%=article_attr_display(@article) %>
+    <!--  <div id="slide-gallary-container"> -->
+    <div id="article-slider-gallary-article" style="display:none;">
+        <div id="slider-background">
+        </div>
+<%#=show_slider_gallary_v3(@article) %> 
+    </div>
+    <!--    </div>-->
+
+    <div id="section-name-article">
+<%#=get_article_name%>
+    </div>
+
+
+    <%=article_edit_div(@article)%>
+
+    <div class="article-caption">
+        <div id="article-publish-date">
+            <%= @article.updated_at.strftime(" %B %d, %Y at %l:%M %p") %> </div>
+
+        <div id="article-title">
+            <%= @article.title %>
+        </div>
+    </div>
+    <div id="article-body-article">
+         <div id="article-media">
+          <%=(image_tag(@article.pictures.first.blank? ? "empty.jpg" : @article.pictures.first.image_url(:slider).to_s, :class=>"article-main-image") rescue image_tag("empty.jpg")) if !!@article.show_image %>
+        </div>
+        <%=display_html(@article.body) rescue @article%>
+    </div>
+
+    <div class="hidden-item" id="article-scrollback-image-not-used" style="display:none;">
+        <%=link_to(image_tag("site/scrollback_image.png"), "#top-of-article")%>
+    </div>
+</div>
