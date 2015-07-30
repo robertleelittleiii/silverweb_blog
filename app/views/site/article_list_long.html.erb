@@ -6,7 +6,7 @@
 
 <% if @articles.count > 0 then %>
   <div id="article-list">
-      <div id="article-block">
+      <div id="article-block" class="<%=params[:layout_format]%>">
           <%  @articles.each_with_index do |article, counter|  %>
 
             <% if @admin_active=="false" then %>
@@ -31,32 +31,49 @@
                     <%=link_to(article.name.to_s.html_safe, {:action=>:article_detail, :id=>article.id}, :class=>"article-detail-link") %>
 
                 </div>
+                <div class="article-header">
+                    <div class="article-name">
+                        <%=link_to(article.name.to_s.html_safe, {:action=>:article_detail, :id=>article.id}, :class=>"article-detail-link") %>
+                    </div>
 
+                    <div class="article-publish-date">
+                        <%= article.updated_at.strftime(" %B %d, %Y at %l:%M %p") %>
+                    </div>
+                    <% if Settings.blog_show_author_avatar=="true" then %>
+                    <div class="article-avatar">
+                        <%=image_tag(article.user.gravatar_url,:class=>"avitar") %>
+                    </div>
+                    <% end %>
+                    <%if Settings.blog_show_author=="true" then %>
+
+                    <div class="article-author">
+                        <div class="article-author-lable">by</div> <div class="article-author-name"><%= author_full_info(article) rescue "unknown"%></div>
+                    </div>
+                    <% end %>
+                </div>
                 <div class="article-picture">
                     <div class="article-float">
                         <div class="article-click" style="background-image: url('<%=asset_path(article.pictures.where(:title=>"List")[0].blank? ? "empty_s.jpg" : article.pictures.where(:title=>"List")[0].image_url(:large).to_s,:class=>"article-image")%>');"></div>
                     </div>
                 </div>
-                
+
                 <div class="article-info">
-                    <div class="article-publish-date">
-                        <%= article.updated_at.strftime(" %B %d, %Y at %l:%M %p") %>
+                    <div class="article-summary">
+                        <%=truncate(Sanitize.fragment(article.body), :omission => "...", :length => 200)%>
+    <%#=truncate(sanitize(article.body), :omission => "...", :length => 200)%>
                     </div>
-                    <div class="article-name">
-                    <%=link_to(article.name.to_s.html_safe, {:action=>:article_detail, :id=>article.id}, :class=>"article-detail-link") %>
-                    </div>
-                    <div class="article-avatar">
-                        <%=image_tag(article.user.gravatar_url,:class=>"avitar") %>
-                    </div>
-                    <div class="article-author">
-                        <div class="article-author-lable">by</div> <div class="article-author-name"><%= author_full_info(article) rescue "unknown"%></div>
-                    </div>
+
                 </div>
 
-                <% if @admin_active=="true" then %>
-                  <%= image_tag("interface/handle.png",:class=>"handle") %>
-                <% end %>
+                <div class="article-more-button">
+
+                </div>
+
             </div>
+            <% if not( @articles.last == article) then %>
+              <div class="article-seperator">
+              </div>
+            <% end %>
           <% end %>
 
       </div>
@@ -76,7 +93,7 @@
   </br>
   </br>
   <center>
-     ** list normal ** NO ARTICLES FOUND IN CATEGORY !
+      ** list long **  NO ARTICLES FOUND IN CATEGORY !
   </center>
 <%end%>
 

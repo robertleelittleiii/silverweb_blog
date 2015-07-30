@@ -1,5 +1,6 @@
 module SilverwebBlog
   require 'silverweb_cms'
+  require 'sanitize'
 
   class Engine < ::Rails::Engine
     

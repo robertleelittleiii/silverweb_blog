@@ -1,6 +1,7 @@
 
 var articleTableAjax = "";
 var articles_index_callDocumentReady_called = false;
+var articlePrefsDialog = "";
 
 $(document).ready(function () {
     if (!articles_index_callDocumentReady_called)
@@ -84,9 +85,9 @@ function articles_index_callDocumentReady() {
     // createPasswordDialog();
     // createArticleDialog();
     bindNewArticle();
-    
-    $("a.button-link").button();
 
+    $("a.button-link").button();
+    bindPreferences();
 }
 
 
@@ -96,8 +97,7 @@ function deleteArticle(article_id)
     var answer = confirm('Are you sure you want to delete this?')
     if (answer) {
         $.ajax({
-            url: '/articles/delete_ajax?id='+ article_id,
-            
+            url: '/articles/delete_ajax?id=' + article_id,
             success: function (data)
             {
                 setUpPurrNotifier("Notice", "Item Successfully Deleted.");
@@ -199,8 +199,8 @@ function createArticleTable() {
 }
 
 function bindNewArticle() {
-    
-   $('a#new-article').unbind().bind('ajax:beforeSend', function (e, xhr, settings) {
+
+    $('a#new-article').unbind().bind('ajax:beforeSend', function (e, xhr, settings) {
         xhr.setRequestHeader('accept', '*/*;q=0.5, text/html, ' + settings.accepts.html);
         $("body").css("cursor", "progress");
     }).bind('ajax:success', function (xhr, data, status) {
@@ -208,8 +208,8 @@ function bindNewArticle() {
         articleTableAjax.fnDraw();
         setUpPurrNotifier("Notice", "New Article Created!'");
     }).bind('ajax:error', function (evt, xhr, status, error) {
-                setUpPurrNotifier("Error", "Article Creation Failed!'");
-    }); 
+        setUpPurrNotifier("Error", "Article Creation Failed!'");
+    });
 
 //    $('a#new-article').bind('ajax:beforeSend', function (evt, xhr, settings) {
 //        // alert("ajax:before");  
@@ -371,8 +371,39 @@ function edit_article_dialog(data) {
 
 }
 
-$(document).off('focusin').on('focusin', function(e) {
+$(document).off('focusin').on('focusin', function (e) {
     if ($(event.target).closest(".mce-window").length) {
         e.stopImmediatePropagation();
     }
 });
+
+
+function bindPreferences() {
+
+    $('a#article-prefs').unbind().bind('ajax:beforeSend', function (e, xhr, settings) {
+        xhr.setRequestHeader('accept', '*/*;q=0.5, text/html, ' + settings.accepts.html);
+        $("body").css("cursor", "progress");
+    }).bind('ajax:success', function (xhr, data, status) {
+        $("body").css("cursor", "default");
+        articlePrefsDialog = createAppDialog(data, "article-prefs-dialog");
+        articlePrefsDialog.dialog('open');
+        articlePrefsDialog.dialog({
+            close: function (event, ui) {
+                articlePrefsDialog.html("");
+                articlePrefsDialog.dialog("destroy");
+            }
+        });
+        require("articles/article_preferences.js");
+        article_preferences_callDocumentReady();
+
+        //update_rolls_callDocumentReady();
+
+
+        // setupRolesSelection();
+        // 
+    }).bind('ajax:error', function (evt, xhr, status, error) {
+        setUpPurrNotifier("Error", "Prefs could not be opened!'");
+    });
+
+
+}

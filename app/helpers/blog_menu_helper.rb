@@ -1,8 +1,8 @@
 module BlogMenuHelper
 
- def menu_show_articles(menuItem, html_options, span_options, class_options=nil, options=nil)
+  def menu_show_articles(menuItem, html_options, span_options, class_options=nil, options=nil)
     return_link = ""
-    
+   
     puts("options-> #{options}")
     
     class_options==nil ? class_options={} : ""
@@ -42,7 +42,21 @@ module BlogMenuHelper
       else
         item_link_to = menuText.html_safe
       end
-        
+       
+      case menuItem.rawhtml
+          
+      when "","0"
+        class_options.merge!({:controller=>:site, :action=>:article_list,:department_id=>top_menu.name, :category_id=>menuItem.name,})
+      when "1"
+        class_options.merge!({:controller=>:site, :action=>:article_list_block,:department_id=>top_menu.name, :category_id=>menuItem.name,})
+      when "2"
+        class_options.merge!({:controller=>:site, :action=>:article_list_wide,:department_id=>top_menu.name, :category_id=>menuItem.name,})
+      when "3"
+        class_options.merge!({:controller=>:site, :action=>:article_list,:layout_format=>:long, :department_id=>top_menu.name, :category_id=>menuItem.name,})
+      end 
+     
+      return_link =  link_to(item_link_to, class_options, html_options)
+
       class_options.merge!({:controller=>:site, :action=>:article_list, :department_id=>top_menu.name, :category_id=>top_menu.name, :category_children=>false, :get_first_sub=>true})
       return_link =  link_to(item_link_to,class_options , html_options)
        

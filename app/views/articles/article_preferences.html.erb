@@ -1,0 +1,31 @@
+<div class="hidden-item">
+    <div id="as_window"><%=params[:request_type]=="window"%></div>
+    <div id="dialog-height">400</div>
+    <div id="dialog-width">500</div>
+    <div id="dialog-name">Blog Settings </div>
+</div>
+
+
+<div id="article-settings-tabs">
+    <ul>
+        <li><a href="#blog-settings-tab">View Settings</a></li>
+    </ul>
+    <div id="blog-settings-tab">
+        <div class="cms-content">
+            <p>
+            <p>
+                <b>Show Author Information</b><br>
+                <%=editablecheckboxedit("blog_show_author", @settings, "Show?")%>
+            </p>
+            <p>
+                <b>Show Author Avatar</b><br>
+                <%=editablecheckboxedit("blog_show_author_avatar", @settings, "Show?")%>
+            </p>               
+
+        </div>
+
+
+    </div>
+
+
+</div>

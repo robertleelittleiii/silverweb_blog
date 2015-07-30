@@ -9,7 +9,8 @@ article_edit_dialog = "";
 function articleeditClickBinding(selector) {
     // selectors .edit-article-item, tr.article-row 
 
-    $(selector).unbind("click").one("click", function () {
+    $(selector).unbind("click").one("click", function (event) {
+        event.stopPropagation();
         console.log($(this).find('#article-id').text());
         var article_id = $(this).find('#article-id').text();
         var is_iframe = $("application-space").length > 0

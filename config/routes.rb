@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       post "add_image"
       get "edit_picture"
       post "update_image_order"
+      get "article_preferences"
     end
   end
 

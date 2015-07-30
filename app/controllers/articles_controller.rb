@@ -63,14 +63,31 @@ class ArticlesController < ApplicationController
 #    end
 #  end             
 
-   def update
+  def update
+    preferences_update = false
+    
+    if params[:id] = "article_preferencess" then
+      eval("Settings." + params["settings"].to_a.first[0] + "='" + params["settings"].to_a.first[1] +"'"   )
+      preferences_update = true
+    else
+    
+      @article = Article.find(params[:id])
+      successfull = @article.update_attributes(article_params)
+    end
+    
     respond_to do |format|
-      if @article.update(article_params)
-        format.html { redirect_to(:action =>"edit", :notice => 'Article was successfully updated.') }
-        format.json { render :json=> {:notice => 'Article was successfully updated.'} }
+      if preferences_update then
+        format.html {render nothing: true}
+        format.json { render :json=> {:notice => 'Preferences were successfully updated.'} }
+      
       else
-        format.html { render :action => "edit" }
-        format.json  { render :json => @article.errors, :status => :unprocessable_entity }
+        if successfull then
+          format.html { redirect_to action: "edit", notice: "Article was successfully updated."}
+          format.json { render :json=> {:notice => 'Article was successfully updated.'} }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @article.errors, status: "unprocessable_entry" }
+        end
       end
     end
   end
@@ -178,7 +195,11 @@ def article_table
     render nothing: true
 
   end
+  
+def article_preferences
+    @settings = Settings.all 
 
+  end
   
   private
 
@@ -219,7 +240,7 @@ def article_table
   
   # Use callbacks to share common setup or constraints between actions.
     def set_article
-      @article = Article.find(params[:id])
+      @article = Article.find(params[:id]) rescue ""
     end
 
     # Only allow a trusted parameter "white list" through.

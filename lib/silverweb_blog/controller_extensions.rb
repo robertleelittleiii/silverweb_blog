@@ -55,7 +55,10 @@ module SilverwebBlog
 
           puts("@article_ids --> #{@articles_list.inspect }")
     
-    
+          @action_name = params[:layout_format].blank? ? "article_list" : "article_list_" + params[:layout_format]
+         
+          @style_sheet_custom = params[:layout_format].blank? ? "" : "article_list_" + params[:layout_format]
+         
           @article_count = @articles_list.length
 
           # @articles = Kaminari.paginate_array(@articles).article(params[:article]).per(@articles_per_article)
@@ -69,7 +72,7 @@ module SilverwebBlog
 
 
           respond_to do |format|
-            format.html # show.html.erb
+            format.html { render action: @action_name }
             format.xml  { render :xml => @articles }
           end
         end

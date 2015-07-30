@@ -20,6 +20,7 @@
    <!-- <h1  class="cms-header">Site Articles</h1> -->
 
      <%=link_to 'New Article',{ :action=>:create_empty_record,:typeofrecord=>"Article"}, :class=>"button-link" ,:id=>"new-article", :remote=>true%>
+    <%= link_to 'Blog Prefs',{ :action=>:article_preferences,:typeofrecord=>"Article"}, :class=>"button-link",:id=>"article-prefs", :remote=>true%>
    
     <p>
       </br>

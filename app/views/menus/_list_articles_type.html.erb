@@ -1,0 +1,10 @@
+<%#
+# To change this license header, choose License Headers in Project Properties.
+# To change this template file, choose Tools | Templates
+# and open the template in the editor.
+%>
+
+       <p>
+        <b>Article List Format:</b><br>
+          <%=ajax_select("rawhtml","menu",@menu, SilverwebBlog::Config.ARTICLE_LIST_LAYOUTS)%>
+        </p>

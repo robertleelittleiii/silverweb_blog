@@ -19,6 +19,7 @@ s.authors     = ["Robert Lee Little III"]
 
   s.add_dependency "rails", "~> 4.2.0"
   s.add_dependency 'silverweb_cms'
+  s.add_dependency 'sanitize'
 
   s.add_development_dependency "mysql"
 end
