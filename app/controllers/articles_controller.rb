@@ -66,7 +66,7 @@ class ArticlesController < ApplicationController
   def update
     preferences_update = false
     
-    if params[:id] = "article_preferencess" then
+    if params[:id] == "article_preferencess" then
       eval("Settings." + params["settings"].to_a.first[0] + "='" + params["settings"].to_a.first[1] +"'"   )
       preferences_update = true
     else
