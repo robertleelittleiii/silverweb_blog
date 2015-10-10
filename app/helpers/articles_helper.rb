@@ -75,4 +75,13 @@ module ArticlesHelper
     mail_to(article.user.name, article.author)
   end
   
+  def get_share_code
+    if not Settings.blog_javascript_social_share.blank?  then
+      return (CGI.unescapeHTML(Settings.blog_javascript_social_share) + CGI.unescapeHTML(Settings.blog_button_block_social_share)).html_safe
+      #+ Settings.blog_button_block_social_share.html_safe
+    else
+    return ""
+    end
+  end
+  
 end

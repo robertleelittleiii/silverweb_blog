@@ -2,7 +2,7 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
   
-    STATUS_TYPES = [["Draft","draft"],["Published","published"],["Future","future"],["Pending","pending"], ["Private","private"],["Deleted","deleted"] ]
+  STATUS_TYPES = [["Draft","draft"],["Published","published"],["Future","future"],["Pending","pending"], ["Private","private"],["Deleted","deleted"] ]
 
   # GET /articles
   def index
@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
 
     @article.revert_to(params[:version].to_i) if params[:version]
 
-      respond_to do |format|
+    respond_to do |format|
       format.html 
       format.json  { render :json => @article, :status => :created, :location => @article }
     end
@@ -42,32 +42,32 @@ class ArticlesController < ApplicationController
     end
   end
   
-    # POST create_empty_record/articles
+  # POST create_empty_record/articles
 
-    def create_empty_record
+  def create_empty_record
     @article = Article.new
     @article.title="New Article"
     @article.body="Edit Me"
     @article.user_id = session[:user_id]
     @article.status = "draft"
     @article.save
-      redirect_to action: :edit, id: @article.id, notice: 'Article was successfully created.'
+    redirect_to action: :edit, id: @article.id, notice: 'Article was successfully created.'
   end
 
   # PATCH/PUT /articles/1
-# def update
-#    if @article.update(article_params)
-#      redirect_to @article, notice: 'Article was successfully updated.'
-#    else
-#      render :edit
-#    end
-#  end             
+  # def update
+  #    if @article.update(article_params)
+  #      redirect_to @article, notice: 'Article was successfully updated.'
+  #    else
+  #      render :edit
+  #    end
+  #  end             
 
   def update
     preferences_update = false
     
-    if params[:id] == "article_preferencess" then
-      eval("Settings." + params["settings"].to_a.first[0] + "='" + params["settings"].to_a.first[1] +"'"   )
+    if params[:id] == "article_preferences" then
+      eval("Settings." + params["settings"].to_a.first[0] + "=\"" + (params["settings"].to_a.first[1]).html_safe() +"\""   )
       preferences_update = true
     else
     
@@ -98,7 +98,7 @@ class ArticlesController < ApplicationController
     redirect_to articles_url, notice: 'Article was successfully destroyed.'
   end
 
-def article_table
+  def article_table
     @objects = current_objects(params)
     @total_objects = total_objects(params)
     render :layout => false
@@ -106,16 +106,16 @@ def article_table
   
  
   def delete_ajax
-      @article = Article.find(params[:id])
+    @article = Article.find(params[:id])
     
-      @article.destroy
-      render :nothing=>true
-    end
+    @article.destroy
+    render :nothing=>true
+  end
     
   def custom
-      @article = Article.find(session[:current_article])
+    @article = Article.find(session[:current_article])
     
-     respond_to do |format|
+    respond_to do |format|
       format.css 
     end
   end
@@ -196,9 +196,12 @@ def article_table
 
   end
   
-def article_preferences
+  def article_preferences
     @settings = Settings.all 
-
+#    if request.put?
+#      render nothing: true
+#    else
+#    end
   end
   
   private
@@ -239,12 +242,12 @@ def article_preferences
   end
   
   # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id]) rescue ""
-    end
+  def set_article
+    @article = Article.find(params[:id]) rescue ""
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def article_params
-      params.require(:article).permit(:title, :body, :status, :author, :show_image)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def article_params
+    params.require(:article).permit(:title, :body, :status, :author, :show_image)
+  end
 end

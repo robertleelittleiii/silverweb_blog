@@ -13,12 +13,16 @@ Rails.application.routes.draw do
       get "edit_picture"
       post "update_image_order"
       get "article_preferences"
+     # put "article_preferences"
     end
   end
 
   match "/site/article_list" => "site#article_list", via: :get
   match "/site/article_detail" => "site#article_detail", via: :get
   match "/site/update_article_partial" => "site#update_article_partial", via: :get
+
+  
+ # match ':article_name(.:format)', :controller => 'site', :action => 'article_detail',  via: [:get]
 
 end
 

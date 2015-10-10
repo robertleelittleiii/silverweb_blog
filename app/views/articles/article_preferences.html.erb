@@ -9,6 +9,7 @@
 <div id="article-settings-tabs">
     <ul>
         <li><a href="#blog-settings-tab">View Settings</a></li>
+        <li><a href="#blog-social-tools-tab">Social Sharing Tool</a></li>
     </ul>
     <div id="blog-settings-tab">
         <div class="cms-content">
@@ -26,6 +27,19 @@
 
 
     </div>
+    <div id="blog-social-tools-tab">
+        <div class="cms-content">
+            <p>
+                <b>Social Share Javascript(from site):</b><br>
+                <%=editablefieldcreate("blog_javascript_social_share", @settings, "javascript code", {:sanitize=>false})%>
+            </p>
+            <p>
+                <b>Social Share Buttons(from site):</b><br>
+                <%=editablefieldcreate("blog_button_block_social_share", @settings,"button code", {:sanitize=>false})%>
+            </p>
 
+        </div>
+
+    </div>
 
 </div>

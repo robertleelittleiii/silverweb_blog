@@ -158,6 +158,7 @@ module SilverwebBlog
             @article = Article.first
           else
             @article = Article.find(params[:id]) 
+            @article = Article.find(params[:id]) || Article.find_by_title(params[:article_name])
           end
                     
           if params[:next] then

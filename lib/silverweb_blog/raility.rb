@@ -20,6 +20,10 @@ module SilverwebBlog
         SilverwebCms::Config.add_nav_item({:name=>"Articles", :controller=>'articles', :action=>'index'})
         
         SilverwebCms::Config.add_menu_class(["List Articles","menu_show_articles"])
+        
+        SilverwebCms::Config.add_route_item({:match=>"/blog/:article_name", :controller=>'site', :action=>'article_detail', :via=>:get})
+#        SilverwebCms::Config.add_route_item({:match=>":article_name(.:format)", :controller=>'site', :action=>'article_detail', :via=>:get})
+
       #  SilverwebCms::Config.add_menu_class(["Show Artifact Group","menu_show_article_group"])
       
       #  SilverwebCms::Config.add_menu_actions(["Show Article",20])
