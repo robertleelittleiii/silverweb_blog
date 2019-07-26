@@ -1,8 +1,9 @@
-class ArticlesController < ApplicationController
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+# frozen_string_literal: true
 
-  
-  STATUS_TYPES = [["Draft","draft"],["Published","published"],["Future","future"],["Pending","pending"], ["Private","private"],["Deleted","deleted"] ]
+class ArticlesController < ApplicationController
+  before_action :set_article, only: %i[show edit update destroy]
+
+  STATUS_TYPES = [%w[Draft draft], %w[Published published], %w[Future future], %w[Pending pending], %w[Private private], %w[Deleted deleted]].freeze
 
   # GET /articles
   def index
@@ -10,8 +11,7 @@ class ArticlesController < ApplicationController
   end
 
   # GET /articles/1
-  def show
-  end
+  def show; end
 
   # GET /articles/new
   def new
@@ -26,8 +26,8 @@ class ArticlesController < ApplicationController
     @article.revert_to(params[:version].to_i) if params[:version]
 
     respond_to do |format|
-      format.html 
-      format.json  { render :json => @article, :status => :created, :location => @article }
+      format.html
+      format.json { render json: @article, status: :created, location: @article }
     end
   end
 
@@ -41,15 +41,15 @@ class ArticlesController < ApplicationController
       render :new
     end
   end
-  
+
   # POST create_empty_record/articles
 
   def create_empty_record
     @article = Article.new
-    @article.title="New Article"
-    @article.body="Edit Me"
+    @article.title = 'New Article'
+    @article.body = 'Edit Me'
     @article.user_id = session[:user_id]
-    @article.status = "draft"
+    @article.status = 'draft'
     @article.save
     redirect_to action: :edit, id: @article.id, notice: 'Article was successfully created.'
   end
@@ -61,37 +61,37 @@ class ArticlesController < ApplicationController
   #    else
   #      render :edit
   #    end
-  #  end             
+  #  end
 
   def update
     preferences_update = false
-    
-    if params[:id] == "article_preferences" then
-      eval("Settings." + params["settings"].to_a.first[0] + "=\"" + (params["settings"].to_a.first[1]).html_safe() +"\""   )
+
+    if params[:id] == 'article_preferences'
+      eval('Settings.' + params['settings'].to_a.first[0] + '="' + params['settings'].to_a.first[1].html_safe + '"')
       preferences_update = true
     else
-    
+
       @article = Article.find(params[:id])
       successfull = @article.update_attributes(article_params)
     end
-    
+
     respond_to do |format|
-      if preferences_update then
-        format.html {render nothing: true}
-        format.json { render :json=> {:notice => 'Preferences were successfully updated.'} }
-      
+      if preferences_update
+        format.html { render nothing: true }
+        format.json { render json: { notice: 'Preferences were successfully updated.' } }
+
       else
-        if successfull then
-          format.html { redirect_to action: "edit", notice: "Article was successfully updated."}
-          format.json { render :json=> {:notice => 'Article was successfully updated.'} }
+        if successfull
+          format.html { redirect_to action: 'edit', notice: 'Article was successfully updated.' }
+          format.json { render json: { notice: 'Article was successfully updated.' } }
         else
-          format.html { render action: "edit" }
-          format.json { render json: @article.errors, status: "unprocessable_entry" }
+          format.html { render action: 'edit' }
+          format.json { render json: @article.errors, status: 'unprocessable_entry' }
         end
       end
     end
   end
-  
+
   # DELETE /articles/1
   def destroy
     @article.destroy
@@ -101,149 +101,155 @@ class ArticlesController < ApplicationController
   def article_table
     @objects = current_objects(params)
     @total_objects = total_objects(params)
-    render :layout => false
+    render layout: false
   end
-  
- 
+
   def delete_ajax
     @article = Article.find(params[:id])
-    
+
     @article.destroy
-    render :nothing=>true
+    render nothing: true
   end
-    
+
   def custom
     @article = Article.find(session[:current_article])
-    
+
     respond_to do |format|
-      format.css 
+      format.css
     end
   end
-  
-  
+
   def link_list
     @articles = Article.order(:title)
-    @pdfs = TinyPrint.where("image_file_name like '%.pdf'") rescue []
-    @last_pdf = @pdfs.last rescue ""
+    @pdfs = begin
+              TinyPrint.where("image_file_name like '%.pdf'")
+            rescue StandardError
+              []
+            end
+    @last_pdf = begin
+                  @pdfs.last
+                rescue StandardError
+                  ''
+                end
     @last_article = @articles.last
   end
-  
-  
+
   def add_image
     @article = Article.find(params[:id])
     format = params[:format]
-    image=params[:image]
-    if image.size > 0
-      @picture = Picture.new(:image=>image)
-      @picture.position=999
+    image = params[:image]
+    unless image.empty?
+      @picture = Picture.new(image: image)
+      @picture.position = 999
       image_saved = @picture.save
-      @article.pictures<< @picture
+      @article.pictures << @picture
     end
-  
+
     respond_to do |format|
       if image_saved
-        format.js   { render :action=>"../pictures/create.js" }
-        format.html { redirect_to @picture, :notice=>"Picture was successfully created." }
-        format.json { render :json=>@picture, :status=>:created, :location=>@picture }
+        format.js   { render action: '../pictures/create.js' }
+        format.html { redirect_to @picture, notice: 'Picture was successfully created.' }
+        format.json { render json: @picture, status: :created, location: @picture }
       else
-        format.html { render :action=>"new" }
-        format.json { render :json=>@picture.errors, :status=>:unprocessable_entry }
+        format.html { render action: 'new' }
+        format.json { render json: @picture.errors, status: :unprocessable_entry }
       end
     end
   end
-    
+
   def delete_image
     @article = Article.find(params[:incoming_id])
     @image = Picture.find(params[:id])
     @image.destroy
-    
-    #  respond_to do |format|  
-    #          format.html { render :nothing => true }
-    #          format.js   { render :nothing => true }  
-    #  end  
 
-    
+    #  respond_to do |format|
+    #          format.html { render :nothing => true }
+    #          format.js   { render :nothing => true }
+    #  end
+
     respond_to do |format|
       format.js if request.xhr?
-      format.html {redirect_to :action => 'show', :id=>params[:menu_id]}
+      format.html { redirect_to action: 'show', id: params[:menu_id] }
     end
   end
-
 
   def destroy_image
     @image = Picture.find(params[:id])
     @image.destroy
-    redirect_to :action => 'show', :id => params[:menu_id]
+    redirect_to action: 'show', id: params[:menu_id]
   end
-  
+
   def edit_picture
     @picture = Picture.find(params[:picture_id])
-    @image_locations = ["List","Primary", "-"]  
-     
+    @image_locations = ['List', 'Primary', '-']
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @picture} 
+      format.json { render json: @picture }
     end
   end
-  
 
   def update_image_order
     params[:picture].each_with_index do |id, position|
       #   Image.update(id, :position => position)
-      Picture.reorder(id,position)
+      Picture.reorder(id, position)
     end
     render nothing: true
+  end
 
-  end
-  
   def article_preferences
-    @settings = Settings.all 
-#    if request.put?
-#      render nothing: true
-#    else
-#    end
+    @settings = Settings.all
+    #    if request.put?
+    #      render nothing: true
+    #    else
+    #    end
   end
-  
+
   private
 
-  def current_objects(params={})
-    current_article = (params[:iDisplayStart].to_i/params[:iDisplayLength].to_i rescue 0)+1
-    @current_objects = Article.page(current_article).per(params[:iDisplayLength]).order("#{datatable_columns(params[:iSortCol_0])} #{params[:sSortDir_0] || "DESC"}").where(conditions(params))
+  def current_objects(params = {})
+    current_article = (begin
+                         params[:iDisplayStart].to_i / params[:iDisplayLength].to_i
+                       rescue StandardError
+                         0
+                       end) + 1
+    @current_objects = Article.page(current_article).per(params[:iDisplayLength]).order("#{datatable_columns(params[:iSortCol_0])} #{params[:sSortDir_0] || 'DESC'}").where(conditions(params))
   end
-  
 
-  def total_objects(params={})
-    @total_objects = Article.where(conditions(params)).count()
+  def total_objects(params = {})
+    @total_objects = Article.where(conditions(params)).count
   end
 
   def datatable_columns(column_id)
     puts(column_id)
     case column_id.to_i
     when 0
-      return "`articles`.`id`"
+      return '`articles`.`id`'
     when 1
-      return "`articles`.`title`"
+      return '`articles`.`title`'
     else
-      return "`articles`.`body`"
+      return '`articles`.`body`'
     end
   end
 
-      
-  def conditions(params={})
-    
+  def conditions(params = {})
     conditions = []
-   
-    conditions << "(articles.id LIKE '%#{params[:sSearch]}%' OR
-       articles.title LIKE '%#{params[:sSearch]}%' OR 
-       articles.body LIKE '%#{params[:sSearch]}%')" if(params[:sSearch])
-    return conditions.join(" AND ")
-    
-    
+
+    if params[:sSearch]
+      conditions << "(articles.id LIKE '%#{params[:sSearch]}%' OR
+         articles.title LIKE '%#{params[:sSearch]}%' OR
+         articles.body LIKE '%#{params[:sSearch]}%')"
+    end
+    conditions.join(' AND ')
   end
-  
+
   # Use callbacks to share common setup or constraints between actions.
   def set_article
-    @article = Article.find(params[:id]) rescue ""
+    @article = begin
+                 Article.find(params[:id])
+               rescue StandardError
+                 ''
+               end
   end
 
   # Only allow a trusted parameter "white list" through.
