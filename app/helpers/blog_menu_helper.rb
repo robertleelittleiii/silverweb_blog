@@ -2,7 +2,7 @@
 
 module BlogMenuHelper
   def menu_show_articles(menuItem, html_options, span_options, class_options = nil, options = nil)
-    return_link = ''
+    return_link = ''.dup
 
     puts("options-> #{options}")
 
@@ -72,7 +72,7 @@ module BlogMenuHelper
       end
 
     else
-      return ''
+      return ''.dup
     end
   end
 end

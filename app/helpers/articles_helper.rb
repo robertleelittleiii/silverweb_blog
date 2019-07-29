@@ -2,7 +2,7 @@
 
 module ArticlesHelper
   def get_article_name
-    out = ''
+    out = ''.dup
     if !@category_id.blank?
       puts('Category selected for get_article_name')
       out << @category_id
@@ -29,7 +29,7 @@ module ArticlesHelper
       @article_name
     else
       if @article.blank?
-        ''
+        ''.dup
       else
         begin
           return @article.title
@@ -42,7 +42,7 @@ module ArticlesHelper
 
   def get_article_style_sheet
     if @article.blank?
-      ''
+      ''.dup
     else
       begin
         return stylesheet_link_tag @article.article_style
@@ -53,7 +53,7 @@ module ArticlesHelper
   end
 
   def article_info(article)
-    returnval = '<div id="attr-articles" class="hidden-item">'
+    returnval = '<div id="attr-articles" class="hidden-item">'.dup
     returnval << '<div id="article-id">' + (begin
                                               article.id.to_s
                                             rescue StandardError
@@ -65,7 +65,7 @@ module ArticlesHelper
   end
 
   def article_attr_display(article)
-    returnval = ''
+    returnval = ''.dup
     returnval << '<div id="attr-articles" class="hidden-item">'
     returnval << '<div id="article-id">' + (begin
                                               article.id.to_s
@@ -77,7 +77,7 @@ module ArticlesHelper
   end
 
   def article_edit_div(article, div_id = '')
-    returnval = ''
+    returnval = ''.dup
     begin
       if session[:user_id]
         user = User.find(session[:user_id])
@@ -102,7 +102,7 @@ module ArticlesHelper
       (CGI.unescapeHTML(Settings.blog_javascript_social_share) + CGI.unescapeHTML(Settings.blog_button_block_social_share)).html_safe
       #+ Settings.blog_button_block_social_share.html_safe
     else
-      ''
+      ''.dup
     end
   end
 end

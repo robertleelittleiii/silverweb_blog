@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class UpdatePermissionsBlog < ActiveRecord::Migration
+class UpdatePermissionsBlog < ActiveRecord::Migration[5.0]
   def self.up
     # Admin role name should be "Admin" for convenience
     # role_sales = Role.new
