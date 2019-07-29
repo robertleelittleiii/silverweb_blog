@@ -18,7 +18,7 @@ module SilverwebBlog
                             ''
                         end
 
-          @articles_per_article = Settings.articles_per_article.to_i || 8
+          @articles_per_article = Settings.articles_per_article.to_i == 0 ? 8 : Settings.articles_per_article.to_i
           @category_id = params[:category_id] || ''
           @department_id = params[:department_id] || ''
           @category_children = params[:category_children] || false
@@ -70,7 +70,7 @@ module SilverwebBlog
           #      @articles_list = Article.all
           #    end
 
-          @article_ids = @articles_list.collect(&:id)
+          @article_ids = @articles_list.pluck(:id)
 
           puts("@article_ids --> #{@articles_list.inspect}")
 
@@ -103,7 +103,8 @@ module SilverwebBlog
                             ''
                          end
 
-          @articles_per_article = Settings.articles_per_article.to_i || 8
+          @articles_per_article = Settings.articles_per_article.to_i == 0 ? 8 : Settings.articles_per_article.to_i
+          #@articles_per_article = Settings.articles_per_article.to_i || 8
           @category_id = params[:category_id] || ''
           @department_id = params[:department_id] || ''
           @category_children = params[:category_children] || false
@@ -155,7 +156,7 @@ module SilverwebBlog
           #      @articles_list = Article.all
           #    end
 
-          @article_ids = @articles_list.collect(&:id)
+          @article_ids = @articles_list.pluck(:id)
 
           puts("@article_ids --> #{@articles_list.inspect}")
 
